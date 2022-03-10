@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -6,11 +8,11 @@ from core.libraries.sys_params import SysParams as SystemParams
 from django.core.mail import send_mail
 
 sys_params = SystemParams()
-
+logger = logging.getLogger(__name__)
 
 @api_view(['POST'])
 def sendEmail(request):
-    is_email_enabled = (sys_params.as_dict().get("is_email_enabled", 1))
+    is_email_enabled = (sys_params.as_dict().get("is_email_enabled", 0))
     
     email_to = request.data['email']
     mess_title = request.data['mess_title']
