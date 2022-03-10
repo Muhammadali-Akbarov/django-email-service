@@ -108,57 +108,56 @@ CORS_ALLOW_ALL_ORIGINS: True
 
 # email configs
 EMAIL_BACKEND = env.str('EMAIL_BACKEND')
-EMAIL_HOST = env.str('EMAIL_HOST')
-EMAIL_PORT = env.int("EMAIL_PORT")
-EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
-
+EMAIL_HOST = env.str('SMTP_HOST')
+EMAIL_PORT = env.int("SMTP_PORT")
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+EMAIL_HOST_USER = env.str('SMTP_USER')
+EMAIL_HOST_PASSWORD = env.str('SMTP_PASS')
 
 TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
-
 
 # Logging settings
 LOGFILE_PATH = env.str('LOGFILE_PATH', default='/var/log/email_api/')
 LOG_LEVEL = env.str('LOG_LEVEL', default="DEBUG")
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'standard': {
-            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+if env.bool("LOG_ENABLED"):
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'standard': {
+                'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            },
         },
-    },
 
-    'handlers': {
-        'file': {
-            'filename': LOGFILE_PATH + "email_api.log",
-            'class': 'logging.handlers.RotatingFileHandler',
-            'maxBytes': 5 * 1024 * 1024,  # 5MB
-            'backupCount': 5,
-            'formatter': 'standard',
+        'handlers': {
+            'file': {
+                'filename': LOGFILE_PATH + "email_api.log",
+                'class': 'logging.handlers.RotatingFileHandler',
+                'maxBytes': 5 * 1024 * 1024,  # 5MB
+                'backupCount': 5,
+                'formatter': 'standard',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'standard'
+            },
         },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+        'loggers': {
+            # Catch all logs from all packages
+            '': {
+                'level': LOG_LEVEL,
+                'handlers': ['file'],
+                'propagate': False,
+            },
+            'django': {
+                'level': LOG_LEVEL,
+                'handlers': ['file', 'console'],
+                'propagate': False,
+            },
         },
-    },
-    'loggers': {
-        # Catch all logs from all packages
-        '': {
-            'level': LOG_LEVEL,
-            'handlers': ['file'],
-            'propagate': False,
-        },
-        'django': {
-            'level': LOG_LEVEL,
-            'handlers': ['file', 'console'],
-            'propagate': True,
-        },
-    },
-}
+    }
 
 
 CACHES = {
@@ -197,11 +196,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Samarkand'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

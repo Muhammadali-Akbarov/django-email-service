@@ -7,10 +7,7 @@ dj-database-url==0.5.0
 dj-email-url==1.0.5
 Django==4.0.3
 django-cache-url==3.3.0
-<<<<<<< HEAD
 django-cors-headers==3.11.0
-=======
->>>>>>> 7af908f491747e6697e81e59f4f04d53919c91df
 django-environs==0.1.1
 djangorestframework==3.13.1
 environs==9.5.0

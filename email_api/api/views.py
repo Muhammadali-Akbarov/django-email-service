@@ -10,17 +10,16 @@ from django.core.mail import send_mail
 sys_params = SystemParams()
 logger = logging.getLogger(__name__)
 
+
 @api_view(['POST'])
 def sendEmail(request):
-    is_email_enabled = (sys_params.as_dict().get("is_email_enabled", 0))
-    
-    email_to = request.data['email']
+    email_to = request.data['email_to']
     mess_title = request.data['mess_title']
     mess_body = request.data['mess_body']
     from_to = request.data['from_to']
-
-    if request.method == "POST" and is_email_enabled:
-
+    
+    if request.method == "POST":
+    
         send_mail(
             mess_title,
             mess_body,
@@ -31,4 +30,4 @@ def sendEmail(request):
 
         return Response({"message": "Email has been sent successfully"}, status=status.HTTP_200_OK)
 
-    return Response({"message": "method not allowed or is_email_enabled is not enabled"})
+    return Response({"message": "method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

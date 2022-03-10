@@ -1,29 +1,25 @@
 # SECRET_KEY & DEBUG
-export SECRET_KEY=
-export DEBUG=
+SECRET_KEY=
+DEBUG=
 
 # LOGS
-export LOGFILE_PATH=
-export LOG_LEVEL=
+LOGFILE_PATH=
+LOG_LEVEL=
 
 # Server Database
-export DB_ENGINE=
-export DB_NAME=
-export DB_USER=
-export DB_PASSWORD=
-export DB_HOST=
-export DB_PORT=
+DB_ENGINE=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
 
 # Email configs
-export EMAIL_BACKEND=
-export EMAIL_HOST=
-export EMAIL_PORT=
-export EMAIL_USE_TLS=
+EMAIL_BACKEND=
+EMAIL_USE_TLS=
 
-export EMAIL_HOST_USER=
-export EMAIL_HOST_PASSWORD=
-
-export SMTP_HOST=
-export SMTP_USER=
-export SMTP_PASS=
-export SMTP_PORT=
+SMTP_HOST=
+SMTP_PORT=
+SMTP_HOST=
+SMTP_USER=
+SMTP_PASS=
