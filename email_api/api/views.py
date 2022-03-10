@@ -27,7 +27,7 @@ def sendEmail(request):
             fail_silently=False,
         )
 
-        return Response("It works", status=status.HTTP_200_OK)
+        return Response("Email has been sent successfully", status=status.HTTP_200_OK)
 
     return Response({"error": {
                         "message": "method not allowed or s3_params is not enabled"
