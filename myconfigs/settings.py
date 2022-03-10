@@ -9,13 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+from email.policy import default
 from pathlib import Path
-
 from environs import Env
 
-#Env configs
-env=Env()
+# Env configs
+env = Env()
 env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG',default=True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,7 +45,8 @@ INSTALLED_APPS = [
 
     # pip3 packages
     'rest_framework',
-    
+    "corsheaders",
+
     # Local apps
     'email_api',
     'core'
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,11 +96,17 @@ DATABASES = {
         'HOST': env.str('DB_HOST'),
         'PORT': env.str('DB_PORT'),
 
+        'TEST': {
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        }
     }
-
 }
 
+#cors_allow_config
+CORS_ALLOW_ALL_ORIGINS: True
 
+# email configs
 EMAIL_BACKEND = env.str('EMAIL_BACKEND')
 EMAIL_HOST = env.str('EMAIL_HOST')
 EMAIL_PORT = env.int("EMAIL_PORT")
@@ -108,9 +115,50 @@ EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 
 
+TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
+
+
 # Logging settings
-LOGFILE_PATH = env.str('LOGFILE_PATH')
-LOG_LEVEL = env.str('LOG_LEVEL')
+LOGFILE_PATH = env.str('LOGFILE_PATH', default='/var/log/email_api/')
+LOG_LEVEL = env.str('LOG_LEVEL', default="DEBUG")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+        },
+    },
+
+    'handlers': {
+        'file': {
+            'filename': LOGFILE_PATH + "email_api.log",
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 5 * 1024 * 1024,  # 5MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        # Catch all logs from all packages
+        '': {
+            'level': LOG_LEVEL,
+            'handlers': ['file'],
+            'propagate': False,
+        },
+        'django': {
+            'level': LOG_LEVEL,
+            'handlers': ['file', 'console'],
+            'propagate': True,
+        },
+    },
+}
 
 
 CACHES = {
@@ -161,7 +209,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
