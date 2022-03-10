@@ -17,19 +17,19 @@ def sendEmail(request):
     mess_body = "This is message body"
     from_to = "MyTaxi <noreply@mytaxi.uz>"
 
-    try:
-        if request.method == "POST" and s3_enabled:
+    if request.method == "POST" and s3_enabled:
 
-            send_mail(
-                mess_title,
-                mess_body,
-                from_to,
-                [email_to],
-                fail_silently=False,
-            )
+        send_mail(
+            mess_title,
+            mess_body,
+            from_to,
+            [email_to],
+            fail_silently=False,
+        )
 
-            return Response("It works", status=status.HTTP_200_OK)
+        return Response("It works", status=status.HTTP_200_OK)
 
-    except:
-        return Response("METHOD NOT ALLOWED OR S3_PARAMS IS NOT ENABLED", status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        
+    return Response({"error": {
+                        "message": "method not allowed or s3_params is not enabled"
+                    }}, 
+                    status=status.HTTP_405_METHOD_NOT_ALLOWED)
