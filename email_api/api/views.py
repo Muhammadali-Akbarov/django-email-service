@@ -40,6 +40,6 @@ def sendEmail(request):
         if message != None:
             message.save()
             
-        return Response({"message": "Email has been sent successfully"}, status=status.HTTP_200_OK)
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     return Response({"message": "method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
