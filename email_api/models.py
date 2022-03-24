@@ -12,9 +12,16 @@ class SysParams(models.Model):
 
 
 class SendMessage(models.Model):
-    sent_time = models.DateTimeField(null=True)
+    email = models.EmailField(max_length=100)
+    mess_title = models.CharField(max_length=255)
+    mess_body = models.TextField()
+    from_to = models.EmailField(max_length=100, db_column='from')
+    create_time = models.DateTimeField(auto_now_add=True)
+    sent_time = models.DateTimeField(auto_now_add=True)
+    
     status = models.BooleanField(default=0)
 
     class Meta:
         managed = False
         db_table = 'max_mail_send_message'
+        

@@ -7,6 +7,8 @@ from rest_framework import status
 from core.libraries.sys_params import SysParams as SystemParams
 from django.core.mail import send_mail
 
+from email_api.models import SendMessage
+
 sys_params = SystemParams()
 logger = logging.getLogger(__name__)
 
@@ -27,7 +29,17 @@ def sendEmail(request):
             [email_to],
             fail_silently=False,
         )
-
-        return Response({"message": "Email has been sent successfully"}, status=status.HTTP_200_OK)
+        
+        message = SendMessage.objects.create(
+            email = email_to,
+            mess_title = mess_title,
+            mess_body = mess_body,
+            from_to = from_to,
+            status = 1
+        )
+        if message != None:
+            message.save()
+            
+        return Response({"status": "success"}, status=status.HTTP_200_OK)
 
     return Response({"message": "method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
