@@ -19,14 +19,14 @@ def sendEmail(request):
     email_to = request.data['email_to']
     mess_title = request.data['mess_title']
     mess_body = request.data['mess_body']
-    from_to = settings.DEFAULT_FROM_EMAIL
+    to = settings.DEFAULT_FROM_EMAIL
     
     if request.method == "POST":
     
         send_mail(
             mess_title,
             mess_body,
-            from_to,
+            to,
             [email_to],
         )
         
@@ -34,11 +34,13 @@ def sendEmail(request):
             email = email_to,
             mess_title = mess_title,
             mess_body = mess_body,
+            to = to,
             status = 1
         )
+        print(message.id)
         if message != None:
             message.save()
-            
+        
         return Response({"status": "success"}, status=status.HTTP_200_OK)
     
     return Response({"message": "method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

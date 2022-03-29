@@ -15,7 +15,7 @@ class SendMessage(models.Model):
     email = models.EmailField(max_length=100)
     mess_title = models.CharField(max_length=255)
     mess_body = models.TextField()
-    from_to = models.EmailField(max_length=100, db_column='from')
+    to = models.EmailField(max_length=100, db_column='from')
     create_time = models.DateTimeField(auto_now_add=True)
     sent_time = models.DateTimeField(auto_now_add=True)
     
