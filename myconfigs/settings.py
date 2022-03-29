@@ -156,7 +156,7 @@ if env.bool("LOG_ENABLED"):
             'django': {
                 'level': LOG_LEVEL,
                 'handlers': ['file', 'console'],
-                'propagate': False,
+                'propagate': True,
             },
         },
     }
