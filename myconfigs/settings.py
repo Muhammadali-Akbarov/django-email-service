@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-from email.policy import default
 from pathlib import Path
 from environs import Env
+
+import pymysql
 
 # Env configs
 env = Env()
@@ -89,19 +90,18 @@ WSGI_APPLICATION = 'myconfigs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env.str('DB_ENGINE', default='django.contrib.gis.db.backends.mysql'),
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': env.str('DB_NAME'),
         'USER': env.str('DB_USER'),
         'PASSWORD': env.str('DB_PASSWORD'),
-        'HOST': env.str('DB_HOST'),
-        'PORT': env.str('DB_PORT'),
-
-        'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
-        }
+        'HOST': env.str('DB_HOST', '127.0.0.1'),
+        'PORT': env.str('DB_PORT', '3306'),
+        'TEST_CHARSET': 'UTF8',
     }
 }
+
+pymysql.version_info = (1, 4, 2, "final", 0)
+pymysql.install_as_MySQLdb()
 
 #cors_allow_config
 CORS_ALLOW_ALL_ORIGINS: True
@@ -119,7 +119,7 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 # Logging settings
-LOGFILE_PATH = env.str('LOGFILE_PATH', default='/var/log/email_api/')
+LOGFILE_PATH = env.str('LOGFILE_PATH', BASE_DIR)
 LOG_LEVEL = env.str('LOG_LEVEL', default="DEBUG")
 
 if env.bool("LOG_ENABLED"):
