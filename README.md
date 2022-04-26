@@ -1,5 +1,5 @@
-# My Taxi Email Api v1 
-Sourcode and Resources for My Taxi Email Api v1
+
+Sourcode and Resources for Email Api v1
 
 # Installation
 * 1 - clone repo https://git.mytaxi.uz/backend/email_api
@@ -13,6 +13,3 @@ Sourcode and Resources for My Taxi Email Api v1
 
 # Features
 * POST method for send message to client
-
-# About more
-https://newwiki.mytaxi.uz/ru/services/email_api
