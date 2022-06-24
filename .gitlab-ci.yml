@@ -1,0 +1,4 @@
+include:
+  - project: 'devops/ci-cd'
+    file: 'deploy-python.gitlab-ci.yml'
+    ref: main
