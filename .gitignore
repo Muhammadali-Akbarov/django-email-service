@@ -79,7 +79,6 @@ docs/_build/
 
 # PyBuilder
 target/
-migrations/
 
 ### Django ###
 *.log

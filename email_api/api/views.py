@@ -1,12 +1,13 @@
 import logging
 
+from django.conf import settings
+from django.core.mail import send_mail
+
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
 
 from core.libraries.sys_params import SysParams as SystemParams
-from django.core.mail import send_mail
-from django.conf import settings
 
 from email_api.models import SendMessage
 

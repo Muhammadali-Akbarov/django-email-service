@@ -6,10 +6,6 @@ class SysParams(models.Model):
     value = models.CharField(max_length=50)
     comment = models.CharField(max_length=255)
 
-    class Meta:
-        managed = False
-        db_table = 'max_taxi_system_params'
-
 
 class SendMessage(models.Model):
     email = models.EmailField(max_length=100)
@@ -18,10 +14,5 @@ class SendMessage(models.Model):
     to = models.EmailField(max_length=100, db_column='from')
     create_time = models.DateTimeField(auto_now_add=True)
     sent_time = models.DateTimeField(auto_now_add=True)
-    
-    status = models.BooleanField(default=0)
 
-    class Meta:
-        managed = False
-        db_table = 'max_mail_send_message'
-        
+    status = models.BooleanField(default=0)

@@ -110,11 +110,11 @@ CORS_ALLOW_ALL_ORIGINS: True
 DEFAULT_FROM_EMAIL = 'MyTaxi Support'
 
 EMAIL_BACKEND = env.str('EMAIL_BACKEND')
-EMAIL_HOST = env.str('EMAIL_HOST')
-EMAIL_PORT = env.int("EMAIL_PORT")
+EMAIL_HOST = env.str('SMTP_HOST')
+EMAIL_PORT = env.int("SMTP_PORT")
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
-EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env.str('SMTP_USER')
+EMAIL_HOST_PASSWORD = env.str('SMTP_PASS')
 
 TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
