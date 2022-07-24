@@ -1,4 +1,7 @@
-Sourcode and Resources for EmailBox
+Sourcode and Resources for EmailBox <br><hr>
+<center>
+<img style="width:30%;" src="https://static.vecteezy.com/system/resources/previews/004/968/625/original/received-new-email-notification-with-post-box-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"><br><hr>
+<center/>
 
 # Installation
 * 1 - clone repo https://github.com/Muhammadali-Akbarov/emailbox
